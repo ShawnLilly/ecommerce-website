@@ -9,13 +9,32 @@
 <div class="jumbotron text-center">
   <div class="container">
     <h1><%= title %></h1>
-    <p>This is the placeholder for Team Activity 02</p>
+    <p>This is the Team Activity 02</p>
+
+    <form action="/ta02/addUser" method="POST"> 
+      Add Name: <input type="text" name="newUser" style="color: black;">
+      <br/>
+      <br/>
+      <button style="background-color: black" type="submit">Submit</button>
+    </form>
+
+    <form action="/ta02/removeUser" method="POST"> 
+      Remove Name: <input type="text" name="rUser" style="color: black;">
+      <br/>
+      <br/>
+      <button style="background-color: black" type="submit">Delete User</button>
+    </form>
+
+    <h2>Users:</h2>
+    <% for(user of users) { %>
+      <p><%= user %></p>
+    <% } %>
   </div>
 </div>
 <div class="container">
-  
-</div>
 
+</div>
 
 </body>
 </html>
+
