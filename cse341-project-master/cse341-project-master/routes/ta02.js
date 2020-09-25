@@ -10,7 +10,7 @@ router.post('/addUser',(req, res, next) => {
         users.push(newUser);
         res.redirect('/ta02/');
     });
-
+ 
 router.post('/removeUser',(req, res, next) => {
     const rUser = req.body.rUser;
     const index = users.indexOf(rUser);

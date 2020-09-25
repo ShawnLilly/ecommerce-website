@@ -41,3 +41,22 @@
   width: 5rem;
   height: 5rem;
 }
+
+.container form {
+  margin: auto;
+  width: 300px;
+  clear: both;
+  ;
+}
+
+.container2 {
+  margin: auto;
+  width: 500px;
+  clear: both;
+  ;
+}
+
+.container form input {
+  width: 100%;
+  clear: both;
+}
