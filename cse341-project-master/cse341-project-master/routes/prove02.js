@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-
+ 
 const words = [];
 
 router.post('/input',(req, res, next) => {
