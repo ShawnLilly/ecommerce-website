@@ -55,8 +55,12 @@
   clear: both;
   ;
 }
-
 .container form input {
   width: 100%;
   clear: both;
+  color: black;
+}
+
+.containerBorder {
+  border-style: double;
 }
