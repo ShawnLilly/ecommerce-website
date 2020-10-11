@@ -1,0 +1,26 @@
+After completing the assignment, be sure to push to Github and Heroku.
+Please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application (e.g., Heroku):
+	https://cse341-2020.herokuapp.com/products
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
+	https://github.com/ShawnLilly/cse341-node
+3. Briefly list and describe the elements of the application that are functioning. 
+	Everything is functioning
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+	refer to question 3
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+	learing about MVC
+6. If you could change this assignment to be more effective or helpful, what would you change?
+	The class activity was a bit confiusing. actually implamenting it with the class would have
+	helped a lot. 
+7. Please select the category you feel best describes your assignment:
+   1 - Some attempt was made
+   2 - Developing, but significantly deficient
+   3 - Slightly deficient, but still mostly adequate
+   4 - Meets requirements
+   (5 - Shows creativity and excels above and beyond requirements)
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+	Did everything asked and implamented a lot of extra style and features 
+	to go above and beyond.
