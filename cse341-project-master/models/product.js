@@ -12,8 +12,8 @@ const productSchema = new Schema({
     required: true
   },
   category: {
-    type: String//,
-    //required: false
+    type: String,
+    required: false
   },
   price: {
     type: Number,
@@ -21,7 +21,7 @@ const productSchema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   userId: {
     type: Schema.Types.ObjectId,

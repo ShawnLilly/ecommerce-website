@@ -12,8 +12,7 @@ Please answer the questions in this text file and submit it to I-Learn.
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 	learing about databases
 6. If you could change this assignment to be more effective or helpful, what would you change?
-	make sure students know ahead of time that the reading is basically the project
-	so they can be doing the project along with the reading
+	This week was good.
 7. Please select the category you feel best describes your assignment:
    1 - Some attempt was made
    2 - Developing, but significantly deficient
@@ -22,6 +21,4 @@ Please answer the questions in this text file and submit it to I-Learn.
    (5 - Shows creativity and excels above and beyond requirements)
 
 8. Provide a brief justification (1-2 sentences) for selecting that category.
-	Did everything asked and implamented a lot of extra style and features 
-	as well as cart icon and a category collection that is displayed in
-	the details part of a product 
+	Did everything asked and implamented a lot of extra style.

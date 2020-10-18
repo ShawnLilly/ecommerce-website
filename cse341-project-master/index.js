@@ -1,28 +1,27 @@
-/*******************************************************************************
- * Feel free to remove this comment block and all other comments after pulling. 
- * They're for information purposes only.
- * 
- * This layout is provided to you for an easy and quick setup to either pull
- * or use to correct yours after working at least 1 hour on Team Activity 02.
- * Throughout the course, we'll be using Express.js for our view engines.
- * However, feel free to use pug or handlebars ('with extension hbs'). You will
- * need to make sure you install them beforehand according to the reading from
- * Udemy course. 
- * IMPORTANT: Make sure to run "npm install" in your root before "npm start"
- *******************************************************************************/
-// Our initial setup (package requires, port number setup)
+// initial setup (package requires, port number setup)
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
-const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
-const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 const mongoose = require('mongoose');
-const app = express();
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
+const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
+const cors = require('cors')
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://new_user:AXYHrupDUWdkCILP@cluster0.j240c.mongodb.net/shop?retryWrites=true&w=majority';                      
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
+const app = express();
+const store = new MongoDBStore({
+  uri: MONGODB_URL,
+  collection: 'sessions'
+});
+const csrfProtection = csrf();
 
 const corsOptions = {
     origin: "https://cse341-2020.herokuapp.com/",
@@ -38,8 +37,10 @@ const options = {
     family: 4
 };
 
-const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://new_user:AXYHrupDUWdkCILP@cluster0.j240c.mongodb.net/shop?retryWrites=true&w=majority';                      
-// Route setup. You can implement more in the future!
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+// Route setup
 const ta01Routes = require('./routes/ta01');
 const ta02Routes = require('./routes/ta02');
 const ta03Routes = require('./routes/ta03'); 
@@ -51,58 +52,72 @@ const prove04Routes = require("./routes/prove04");
 const classActivities = require("./routes/03/routes");
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
+//const { collection } = require('./models/user');
+
+app.use(bodyParser({extended: false})) // For parsing the body of a POST
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(
+  session({
+    secret: 'my secret', 
+    resave: false, 
+    saveUninitialized: 
+    false, store: store
+  })
+);
+app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
-  User.findById('5f829696257adf242c62e55c')
+  if(!req.session.user){
+    return next();
+  }
+  User.findById(req.session.user._id)
     .then(user => {
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err));   
 });
 
-User.findOne().then(user => {
-  if (!user) {
-    const user = new User({
-      name: 'Bob',
-      email: 'Bobtest.com',
-      cart: {
-        items: []
-      }
-    });
-    user.save();
-  }
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+app.use('/ta01', ta01Routes);
+app.use('/ta02', ta02Routes);
+app.use('/ta03', ta03Routes); 
+app.use('/ta04', ta04Routes);
+app.use('/prove01', prove01Routes);
+app.use('/prove02', prove02Routes);
+app.use('/prove03', prove03Routes);
+app.use('/prove04', prove04Routes);
+app.use('/03', classActivities);
+app.use('/admin', adminRoutes);
+
+
+app.get('/', (req, res, next) => {
+  // This is the primary index, always handled last. 
+  res.render('pages/index', {title: 'Welcome to my CSE341 repo', path: '/'});
 })
-.catch(err => {
-  console.log(err);
-});
 
-   mongoose
-  .connect(
-    MONGODB_URL, options
-  )
+app.use( shopRoutes);
+app.use( authRoutes);
+app.use(errorController.get404);
+
+mongoose
+  .connect(MONGODB_URL, options)
   .then(result => {
-    app.use(express.static(path.join(__dirname, 'public')))
-    .set('views', path.join(__dirname, 'views'))
-    .set('view engine', 'ejs')
-    .use(bodyParser({extended: false})) // For parsing the body of a POST
-    .use('/ta01', ta01Routes)
-    .use('/ta02', ta02Routes) 
-    .use('/ta03', ta03Routes) 
-    .use('/ta04', ta04Routes)
-    .use('/prove01', prove01Routes)
-    .use('/prove02', prove02Routes)
-    .use('/prove03', prove03Routes)
-    .use('/prove04', prove04Routes)
-    .use('/03', classActivities)
-    .use('/admin', adminRoutes)
-    
-    .get('/', (req, res, next) => {
-      // This is the primary index, always handled last. 
-      res.render('pages/index', {title: 'Welcome to my CSE341 repo', path: '/'});
-      })
-      .use(shopRoutes)
-      .use(errorController.get404)
-      .listen(PORT, () => console.log(`Listening on ${ PORT }`));
-
+    app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
   })
+  .catch(err => {
+    console.log(err);
+  });
+
+    
+
+
+
+  
