@@ -142,7 +142,7 @@ exports.postSignup = (req, res, next) => {
         html: `
           <div style="text-align: center;">
             <h1>You successfully signed up!</h1>
-          </div>
+          </div> 
         `
       });
     })

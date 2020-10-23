@@ -38,8 +38,8 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description
       },
-      errorMessage: 'Database operation failed please try again.',
-      validationErrors: []
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array()
     });
   }
 
