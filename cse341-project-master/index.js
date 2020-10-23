@@ -53,6 +53,7 @@ const classActivities = require("./routes/03/routes");
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const { use } = require('./routes/ta01');
 //const { collection } = require('./models/user');
 
 app.use(bodyParser({extended: false})) // For parsing the body of a POST
@@ -69,21 +70,26 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+app.use((req, res, next) => {
   if(!req.session.user){
     return next();
   }
   User.findById(req.session.user._id)
     .then(user => {
+      if(!user) {
+        return next();
+      }
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));   
-});
-
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
+    .catch(err => {
+      next(new Error(err));
+    });   
 });
 
 app.use('/ta01', ta01Routes);
@@ -105,12 +111,24 @@ app.get('/', (req, res, next) => {
 
 app.use( shopRoutes);
 app.use( authRoutes);
+
+app.get('/500', errorController.get500);
+
 app.use(errorController.get404);
+
+app.use((error, req, res, next) => {
+  //res.redirect('/500');
+  res.status(500).render('500', { 
+    pageTitle: 'Server Error', 
+    path: '/500',
+    isAuthenticated: req.session.isLoggedIn 
+  });
+});
 
 mongoose
   .connect(MONGODB_URL, options)
   .then(result => {
-    app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+    app.listen(PORT, () => {console.log(`Listening on ${ PORT }`)});
   })
   .catch(err => {
     console.log(err);

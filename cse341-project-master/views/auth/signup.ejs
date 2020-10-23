@@ -8,24 +8,47 @@
 
     <main>
         <% if (errorMessage) {%>
-            <div class="user-message user-message--error"><%=errorMessage %></div>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
-        <form class="login-form" action="/signup" method="POST">
+        <form class="login-form" action="/signup" method="POST" novalidate>
             <div class="form-control">
                 <label for="name">Full Name</label>
-                <input type="name" placeholder="Enter your name" name="name" id="name" required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>"
+                    type="name" 
+                    placeholder="Enter your name" 
+                    name="name" id="name" 
+                    value="<%= oldInput.name%>">
             </div>
             <div class="form-control">
                 <label for="email">E-Mail</label>
-                <input type="email" placeholder="Enter your email" name="email" id="email"required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+                    type="email" 
+                    placeholder="Enter your email" 
+                    name="email" 
+                    id="email" 
+                    value="<%= oldInput.email%>">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="password" placeholder="Enter your password" name="password" id="password" required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
+                    type="password" 
+                    placeholder="Enter your password" 
+                    name="password" 
+                    id="password" 
+                    value="<%= oldInput.password%>">
             </div>
             <div class="form-control">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" placeholder="Confirm your password"name="confirmPassword" id="confirmPassword" required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
+                    type="password" 
+                    placeholder="Confirm your password"
+                    name="confirmPassword" 
+                    id="confirmPassword" 
+                    value="<%= oldInput.confirmPassword%>">
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit">Signup</button>

@@ -7,26 +7,59 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
+        <% if (errorMessage) {%>
+            <div class="user-message user-message--error"><%=errorMessage %></div>
+        <% } %>
         <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label>
-                <input type="text" placeholder="Enter Title" name="title" id="title" value="<% if (editing) { %><%= product.title %><% } %>" required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'title') ? 'invalid' : '' %>"
+                    type="text" 
+                    placeholder="Enter Title" 
+                    name="title" 
+                    id="title" 
+                    value="<% if (editing || hasError) { %><%= product.title %><% } %>">
             </div>
             <div class="form-control">
                 <label for="category">Category</label>
-                <input type="text" placeholder="Enter Category" name="category" id="category" value="<% if (editing) { %><%= product.category %><% } %>">
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'category') ? 'invalid' : '' %>"
+                    type="text" 
+                    placeholder="Enter Category" 
+                    name="category" 
+                    id="category" 
+                    value="<% if (editing || hasError) { %><%= product.category %><% } %>">
             </div>
             <div class="form-control">
                 <label for="imageUrl">Image URL</label>
-                <input type="text" placeholder="Enter Image URL" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= product.imageUrl %><% } %>" required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
+                    type="text" 
+                    placeholder="Enter Image URL" 
+                    name="imageUrl" 
+                    id="imageUrl" 
+                    value="<% if (editing || hasError) { %><%= product.imageUrl %><% } %>" >
             </div>
             <div class="form-control">
                 <label for="price">Price</label>
-                <input type="number" placeholder="Enter Price"name="price" id="price" step="0.01" value="<% if (editing) { %><%= product.price %><% } %>" required>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'price') ? 'invalid' : '' %>"
+                    type="number" 
+                    placeholder="Enter Price"
+                    name="price" 
+                    id="price" 
+                    step="0.01" 
+                    value="<% if (editing || hasError) { %><%= product.price %><% } %>" >
             </div>
             <div class="form-control">
                 <label for="description">Description</label>
-                <textarea name="description" placeholder="Enter Description" id="description" rows="5"><% if (editing) { %><%= product.description %><% } %></textarea>
+                <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
+                    name="description" 
+                    placeholder="Enter Description" 
+                    id="description" 
+                    rows="5"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
             </div>
             <% if (editing) { %>
                 <input type="hidden" value="<%= product._id %>" name="productId">
