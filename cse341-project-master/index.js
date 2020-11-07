@@ -49,6 +49,7 @@ const prove01Routes = require("./routes/prove01");
 const prove02Routes = require("./routes/prove02");
 const prove03Routes = require("./routes/prove03");
 const prove04Routes = require("./routes/prove04");
+const prove08Routes = require("./routes/prove08");
 const classActivities = require("./routes/03/routes");
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -100,6 +101,7 @@ app.use('/prove01', prove01Routes);
 app.use('/prove02', prove02Routes);
 app.use('/prove03', prove03Routes);
 app.use('/prove04', prove04Routes);
+app.use('/prove08', prove08Routes);
 app.use('/03', classActivities);
 app.use('/admin', adminRoutes);
 
@@ -117,7 +119,6 @@ app.get('/500', errorController.get500);
 app.use(errorController.get404);
 
 app.use((error, req, res, next) => {
-  //res.redirect('/500');
   res.status(500).render('500', { 
     pageTitle: 'Server Error', 
     path: '/500',

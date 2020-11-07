@@ -9,13 +9,35 @@
 <div class="jumbotron text-center">
   <div class="container">
     <h1><%= title %></h1>
-    <p>This is the placeholder for Team Activity 03</p>
   </div>
 </div>
 <div class="container">
-  
+  <form action="/ta03/search-product" method="POST">
+    <input type="text" name="searchName">
+    <button type="submit">Click Here to Search</button>
+  </form>
+  <% if (products.length > 0) { %>
+    <div>
+        <% for (let product of products) { %>
+            <article>
+                <header>
+                    <h1><%= product.name %></h1>
+                </header>
+                <div>
+                    <img src="<%= product.imageUrl %>"
+                        alt="<%= product.title %>">
+                </div>
+                <div>
+                    <h2>$<%= product.price %></h2>
+                    <p><%= product.description %></p><br>
+                </div>
+            </article>
+        <% } %>
+    </div>
+<% } else { %>
+    <h1>No Products Found!</h1>
+<% } %>
 </div>
-
 
 </body>
 </html>

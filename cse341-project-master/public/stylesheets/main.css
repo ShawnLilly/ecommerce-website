@@ -64,3 +64,25 @@
 .containerBorder {
   border-style: double;
 }
+
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.pagination a{
+  text-decoration: none;
+  color: #0065BD;
+  padding: 0.5rem;
+  border: 1px solid white;
+  margin: 0;
+  background-color: white;
+}
+
+.pagination a:hover,
+.pagination a:active
+.pagination a.active{
+  color: white;
+  background-color: #3d8dd3;
+}
+
