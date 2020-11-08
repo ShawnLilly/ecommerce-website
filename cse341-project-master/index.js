@@ -24,7 +24,7 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 
 const corsOptions = {
-    origin: "https://cse341-2020.herokuapp.com/",
+    origin: "https://cse341ecom.herokuapp.com/",
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
