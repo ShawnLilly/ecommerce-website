@@ -4,7 +4,7 @@
 This project was used to get familiar with Nodejs and get a general idea of how it works. I am using the course NodeJS - The Complete Guide (MVC, REST APIs, GraphQL, Deno) as a guide for my project.
 
 ### Lastest Version
-To check the live project, go to 
+To check the live project, go to https://cse341ecom.herokuapp.com/
 
 ### Technologies
 
